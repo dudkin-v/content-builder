@@ -1,5 +1,5 @@
 {
-  "name": "content-builder",
+  "name": "data-driven-content-builder",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

@@ -1,0 +1,36 @@
+{
+  "name": "content-builder",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "Vladyslav Dudkin",
+  "license": "ISC",
+  "description": "The package is intended for internal use.",
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "npm run build"
+  },
+  "files": ["dist"],
+  "exports": {
+    "./core": {
+      "import": "./dist/core/index.js",
+      "require": "./dist/core/index.cjs"
+    },
+    "./components": {
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.cjs"
+    }
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.2",
+    "zod": "^3.0.0"
+  },
+  "peerDependencies": {
+    "zod": "^3.0.0"
+  },
+  "sideEffects": false
+}

@@ -9,6 +9,7 @@ export * from './heroSection';
 export * from './imagesGrid';
 export * from './linkButtons';
 export * from './scrollingGallery';
+export * from './simpleImagesCarousel';
 export * from './steps';
 export * from './table';
 export * from './textBlock';

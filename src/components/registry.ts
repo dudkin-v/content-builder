@@ -1,17 +1,13 @@
 import type { CBField } from '../core';
 import { shared } from './shared';
-import { collapsibleList, collapsibleListItem } from './collapsibleList';
-import { heroBanner, heroBannerItem } from './heroBanner';
+import { collapsibleList } from './collapsibleList';
+import { heroBanner } from './heroBanner';
 import { heroSection } from './heroSection';
 import { linkButtons } from './linkButtons';
 import { textBlock } from './textBlock';
 import { textSeparator } from './textSeparator';
-import {
-    simpleImagesCarousel,
-} from './simpleImagesCarousel';
-import {
-    circleCardsCarousel,
-} from './circleCardsCarousel';
+import { simpleImagesCarousel } from './simpleImagesCarousel';
+import { circleCardsCarousel } from './circleCardsCarousel';
 import { threeTitledImages } from './threeTitledImages';
 import { threeSimpleImages } from './threeSimpleImages';
 import { imagesGrid } from './imagesGrid';

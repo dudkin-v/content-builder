@@ -70,6 +70,7 @@ const component = <
 
     return {
         name: config.name,
+        hasResolver: !!config.hasResolver,
 
         isEmpty: (data) => {
             return requiredFields.every((key) => fields[key].isEmpty(data[key]));

@@ -4,14 +4,15 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "keywords": [],
   "author": "Vladyslav Dudkin",
   "license": "ISC",
   "description": "The package is intended for internal use.",
   "scripts": {
     "build": "tsup",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish --access public"
   },
   "files": ["dist"],
   "exports": {

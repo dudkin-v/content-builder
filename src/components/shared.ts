@@ -138,6 +138,17 @@ const button = core.component(
 	}
 );
 
+const staticCTAButton = core.component(
+	{ name: 'default-cta', optional: ['variant', 'color', 'size', 'label'] },
+	{
+		type: stringWithoutPlaceholder,
+		label: localizedString,
+		variant: stringWithoutPlaceholder,
+		color: stringWithoutPlaceholder,
+		size: stringWithoutPlaceholder,
+	}
+);
+
 const configurableText = core.component(
 	{
 		name: 'configurable-text',
@@ -171,6 +182,7 @@ export const shared = {
 	urlKey,
 	localizedUrlKey,
 	button,
+	staticCTAButton,
 	link,
 	configurableText,
 	static: staticComponent,
@@ -193,6 +205,9 @@ export type LinkViewData = InferViewData<typeof shared.link>;
 
 export type ButtonData = InferData<typeof shared.button>;
 export type ButtonViewData = InferViewData<typeof shared.button>;
+
+export type StaticCTAButtonData = InferData<typeof shared.staticCTAButton>;
+export type StaticCTAButtonViewData = InferViewData<typeof shared.staticCTAButton>;
 
 export type UrlKeyData = InferData<typeof shared.urlKey>;
 export type UrlKeyViewData = InferViewData<typeof shared.urlKey>;

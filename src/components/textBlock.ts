@@ -9,16 +9,16 @@ export const textBlock = core.component(
 			'button',
 			'align',
 			'bgColor',
-			'showContactsButton',
+			'staticCTAButtons',
 		],
 	},
 	{
 		title: shared.configurableText,
 		content: shared.configurableText,
 		button: shared.button,
+		staticCTAButtons: core.sortable(shared.staticCTAButton, 1, 2),
 		align: shared.stringWithoutPlaceholder,
 		bgColor: shared.stringWithoutPlaceholder,
-		showContactsButton: shared.boolean,
 	}
 );
 

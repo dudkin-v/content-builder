@@ -4,11 +4,12 @@ import { shared } from './shared';
 export const heroBannerItem = core.component(
 	{
 		name: 'Hero banner item',
-		optional: ['title', 'button', 'variant', 'urlKey'],
+		optional: ['title', 'button', 'staticCTAButtons', 'variant', 'urlKey'],
 	},
 	{
 		title: shared.configurableText,
 		button: shared.button,
+		staticCTAButtons: core.sortable(shared.staticCTAButton, 1, 2),
 		variant: shared.stringWithoutPlaceholder,
 		urlKey: shared.localizedUrlKey,
 		image: core.component(

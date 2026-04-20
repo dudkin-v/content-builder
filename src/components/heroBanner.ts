@@ -8,10 +8,7 @@ export const heroBannerItem = core.component(
 	},
 	{
 		title: shared.configurableText,
-		buttons: core.sortableVariants({
-			[shared.customButton.name]: shared.customButton,
-			[shared.staticButton.name]: shared.staticButton,
-		}, 1, 2),
+		buttons: core.sortable(shared.button, 1, 2),
 		variant: shared.stringWithoutPlaceholder,
 		urlKey: shared.localizedUrlKey,
 		image: core.component(

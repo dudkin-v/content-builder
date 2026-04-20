@@ -521,13 +521,9 @@ const sortable = <Data, ViewData>(
     });
 };
 
-const sortableVariants = <
-    Fields extends Record<string, CBField<any, any>>,
->(
+const variants = <Fields extends Record<string, CBField<any, any>>>(
     fields: Fields,
-    minCount: number,
-    maxCount: number,
-    defaultType?: keyof Fields & string
+    defaultType?: keyof Fields & string,
 ) => {
     type TypeKey = keyof Fields & string;
     type ItemData = { [K in TypeKey]: { type: K; data: InferData<Fields[K]> } }[TypeKey];
@@ -535,81 +531,33 @@ const sortableVariants = <
 
     const resolvedDefaultType = (defaultType ?? Object.keys(fields)[0]) as TypeKey;
 
-    return field<CBSortable<ItemData>, ItemViewData[]>({
-        name: `sortable-variants`,
+    return field<ItemData, ItemViewData>({
+        name: 'variants',
 
-        isEmpty: (data) => {
-            return (
-                !data.sortIds.length ||
-                data.sortIds.every((id) => {
-                    const item = data.items[id];
-                    return fields[item.type].isEmpty(item.data);
-                })
-            );
-        },
+        isEmpty: (data) => fields[data.type].isEmpty(data.data),
 
         getInitialData: (data, context) => {
-            const result: CBSortable<ItemData> = { sortIds: [], items: {} };
-
-            if (data) {
-                result.sortIds = data.sortIds;
-            } else {
-                result.sortIds = Array.from({ length: minCount }).map(() =>
-                    context.generateId()
-                );
-            }
-
-            result.sortIds.forEach((id) => {
-                const existing = data?.items[id];
-                const type = existing?.type ?? resolvedDefaultType;
-                result.items[id] = {
-                    type,
-                    data: fields[type].getInitialData(existing?.data, context),
-                } as ItemData;
-            });
-
-            return result;
+            const type = (data?.type ?? resolvedDefaultType) as TypeKey;
+            return {
+                type,
+                data: fields[type].getInitialData(data?.data, context),
+            } as ItemData;
         },
 
         getNormalizedData: (data, context) => {
-            const result: CBSortable<ItemData> = { sortIds: [], items: {} };
-
-            data.sortIds.forEach((id) => {
-                const item = data.items[id];
-                const normalized = fields[item.type].getNormalizedData(item.data, context);
-
-                if (normalized) {
-                    result.sortIds.push(id);
-                    result.items[id] = { type: item.type, data: normalized } as ItemData;
-                }
-            });
-
-            if (result.sortIds.length < minCount || result.sortIds.length > maxCount) {
-                return null;
-            }
-
-            return result;
+            const normalized = fields[data.type].getNormalizedData(data.data, context);
+            if (!normalized) return null;
+            return { type: data.type, data: normalized } as ItemData;
         },
 
         getViewData: async (data, viewContext) => {
-            const promiseList = data.sortIds.map(async (id) => {
-                const item = data.items[id];
-                const viewData = await fields[item.type].getViewData(item.data, viewContext);
-                if (!viewData) return null;
-                return { type: item.type, ...viewData } as ItemViewData;
-            });
-
-            const result = (await Promise.all(promiseList)).filter(Boolean) as ItemViewData[];
-
-            if (!result.length) return null;
-            return result;
+            const viewData = await fields[data.type].getViewData(data.data, viewContext);
+            if (!viewData) return null;
+            return { type: data.type, ...viewData } as ItemViewData;
         },
 
         getValidationSchema: (validationsContext) => {
-            const rangeMessage =
-                validationsContext.validationMessages?.arrayRange(minCount, maxCount);
-
-            const variantSchemas = (Object.entries(fields) as [string, CBField<any, any>][]).map(
+            const variantSchemas = (Object.entries(fields) as [TypeKey, CBField<any, any>][]).map(
                 ([type, f]) =>
                     z.object({
                         type: z.literal(type),
@@ -617,21 +565,14 @@ const sortableVariants = <
                     })
             );
 
-            const itemSchema =
-                variantSchemas.length === 1
-                    ? variantSchemas[0]
-                    : z.discriminatedUnion(
-                          'type',
-                          variantSchemas as unknown as [z.ZodObject<any>, z.ZodObject<any>, ...z.ZodObject<any>[]]
-                      );
+            if (variantSchemas.length === 1) {
+                return variantSchemas[0] as z.ZodType<ItemData>;
+            }
 
-            return z.object({
-                sortIds: z
-                    .array(z.string())
-                    .min(minCount, rangeMessage)
-                    .max(maxCount, rangeMessage),
-                items: z.record(itemSchema),
-            });
+            return z.discriminatedUnion(
+                'type',
+                variantSchemas as unknown as [z.ZodObject<any>, z.ZodObject<any>, ...z.ZodObject<any>[]]
+            ) as unknown as z.ZodType<ItemData>;
         },
     });
 };
@@ -654,7 +595,7 @@ export const core = {
     component,
     localized,
     sortable,
-    sortableVariants,
+    variants,
     adaptive,
     withoutPlaceholder,
 };

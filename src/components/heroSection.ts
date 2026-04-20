@@ -7,10 +7,7 @@ export const heroSection = core.component(
 		title: shared.configurableText,
 		description: shared.localizedString,
 		image: shared.simplePicture,
-		buttons: core.sortableVariants({
-			[shared.customButton.name]: shared.customButton,
-			[shared.staticButton.name]: shared.staticButton,
-		}, 1, 2),
+		buttons: core.sortable(shared.button, 1, 2),
 	}
 );
 

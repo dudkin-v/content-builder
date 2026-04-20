@@ -127,9 +127,10 @@ const link = core.component(
 	}
 );
 
-const button = core.component(
-	{ name: 'button', optional: ['variant', 'color', 'size'] },
+const customButton = core.component(
+	{ name: 'custom-button', optional: ['variant', 'color', 'size'] },
 	{
+		type: stringWithoutPlaceholder,
 		label: localizedString,
 		urlKey: localizedUrlKey,
 		variant: stringWithoutPlaceholder,
@@ -138,8 +139,8 @@ const button = core.component(
 	}
 );
 
-const staticCTAButton = core.component(
-	{ name: 'default-cta', optional: ['variant', 'color', 'size', 'label'] },
+const staticButton = core.component(
+	{ name: 'static-button', optional: ['variant', 'color', 'size', 'label'] },
 	{
 		type: stringWithoutPlaceholder,
 		label: localizedString,
@@ -181,8 +182,8 @@ export const shared = {
 	simplePictureWithSize,
 	urlKey,
 	localizedUrlKey,
-	button,
-	staticCTAButton,
+	customButton,
+	staticButton,
 	link,
 	configurableText,
 	static: staticComponent,
@@ -203,11 +204,11 @@ export type SimplePictureWithSizeViewData = InferViewData<typeof shared.simplePi
 export type LinkData = InferData<typeof shared.link>;
 export type LinkViewData = InferViewData<typeof shared.link>;
 
-export type ButtonData = InferData<typeof shared.button>;
-export type ButtonViewData = InferViewData<typeof shared.button>;
+export type CustomButtonData = InferData<typeof shared.customButton>;
+export type CustomButtonViewData = InferViewData<typeof shared.customButton>;
 
-export type StaticCTAButtonData = InferData<typeof shared.staticCTAButton>;
-export type StaticCTAButtonViewData = InferViewData<typeof shared.staticCTAButton>;
+export type StaticButtonData = InferData<typeof shared.staticButton>;
+export type StaticButtonViewData = InferViewData<typeof shared.staticButton>;
 
 export type UrlKeyData = InferData<typeof shared.urlKey>;
 export type UrlKeyViewData = InferViewData<typeof shared.urlKey>;

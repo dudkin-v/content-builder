@@ -2,13 +2,15 @@ import { core, type InferData, type InferViewData } from '../core';
 import { shared } from './shared';
 
 export const heroSection = core.component(
-	{ name: 'Hero section', optional: ['button', 'staticCTAButtons'] },
+	{ name: 'Hero section', optional: ['buttons'] },
 	{
 		title: shared.configurableText,
 		description: shared.localizedString,
 		image: shared.simplePicture,
-		button: shared.button,
-		staticCTAButtons: core.sortable(shared.staticCTAButton, 1, 2),
+		buttons: core.sortableVariants({
+			[shared.customButton.name]: shared.customButton,
+			[shared.staticButton.name]: shared.staticButton,
+		}, 1, 2),
 	}
 );
 

@@ -6,17 +6,18 @@ export const textBlock = core.component(
 		name: 'Text block',
 		optional: [
 			'title',
-			'button',
+			'buttons',
 			'align',
 			'bgColor',
-			'staticCTAButtons',
 		],
 	},
 	{
 		title: shared.configurableText,
 		content: shared.configurableText,
-		button: shared.button,
-		staticCTAButtons: core.sortable(shared.staticCTAButton, 1, 2),
+		buttons: core.sortableVariants({
+			[shared.customButton.name]: shared.customButton,
+			[shared.staticButton.name]: shared.staticButton,
+		}, 1, 2),
 		align: shared.stringWithoutPlaceholder,
 		bgColor: shared.stringWithoutPlaceholder,
 	}

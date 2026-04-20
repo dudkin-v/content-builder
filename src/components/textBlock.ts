@@ -14,7 +14,7 @@ export const textBlock = core.component(
 	{
 		title: shared.configurableText,
 		content: shared.configurableText,
-		buttons: core.sortable(shared.button, 1, 2),
+		buttons: core.sortable(shared.button, 0, 2),
 		align: shared.stringWithoutPlaceholder,
 		bgColor: shared.stringWithoutPlaceholder,
 	}

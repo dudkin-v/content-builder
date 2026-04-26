@@ -9,7 +9,7 @@ export const table = core.component(
 		title: shared.configurableText,
 		caption: shared.localizedString,
 		columns: tableRow,
-		rows: core.sortable(tableRow, 2, 20),
+		rows: core.sortable(tableRow, 1, 20),
 	}
 );
 
